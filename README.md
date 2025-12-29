@@ -1,180 +1,97 @@
-# Case Study: Digital Marketing Performance  
-**Simple Linear Regression Assignment**
+# Regression Marketing Case Study  
+**Digital Marketing Performance Analysis**
 
-## Background
+This repository contains a complete regression-based case study analyzing the relationship between **weekly digital advertising spend** and **website conversions** for an e-commerce retailer.
 
-You are a **marketing analyst at ClickConvert**, a digital marketing agency.  
-Your client is an **e-commerce retailer** running Facebook advertising campaigns and wants to understand the relationship between:
-
-- **Weekly advertising spend**
-- **Website conversions**
-
-The client’s **Chief Financial Officer (CFO)** believes that the marketing budget is only justified if the company receives **at least 5 additional conversions for every 1% increase in advertising spend**.
-
-You have been provided with **5 years of historical data (260 weeks)** to analyze and evaluate this claim.
+The project was completed as part of the **BAX-441 (Business Analytics)** coursework and demonstrates both **technical regression modeling** and **executive-level business communication**.
 
 ---
 
-## Dataset Information
+## 📌 Project Overview
 
-- **File Name:** `MiniCase2_MarketingPerformance`
-- **Sample Size:** 260 weekly observations (5 years)
+- **Objective:**  
+  Evaluate whether increased advertising spend leads to sufficient increases in conversions to justify the marketing budget.
 
-### Variables
+- **Key Business Question:**  
+  > Does a 1% increase in advertising spend generate *at least* 5 additional conversions, as required by the CFO?
 
-1. **Week**  
-   - Unique identifier for each observation
-
-2. **AdSpend**  
-   - Weekly advertising spend  
-   - Measured in **thousands of dollars**
-
-3. **Conversions**  
-   - Number of website conversions during the week
+- **Methods Used:**  
+  - Simple Linear Regression  
+  - Model diagnostics & fit assessment  
+  - Tukey’s Bulging Rule & transformation  
+  - Confidence & prediction intervals  
+  - Business interpretation of statistical results
 
 ---
 
-## Assignment Tasks
+## 📂 Repository Structure
 
-### Task 1 (10 points)
-Create a **scatterplot** of **AdSpend vs. Conversions**.
-
-- Describe what you observe.
-- Assess whether a **linear relationship** appears to exist between the two variables.
-
----
-
-### Task 2 (10 points)
-Build a **simple linear regression model** with:
-
-- **Dependent Variable:** Conversions  
-- **Independent Variable:** AdSpend (in thousands)
-
-Include:
-- The regression model specification
-- The estimated regression equation with coefficients
-- Interpretation of the coefficient estimates
+├── Case2_Marketing.csv # Dataset (260 weeks of data)
+├── problem_statement.md # Full assignment problem statement
+├── Regression_Assignment.Rmd # R Markdown analysis
+├── Regression_Assignment_RMD.html # Rendered HTML output
+├── Regression_Executive_Summary.pdf # Executive business summary
+├── README.md # Project overview (this file)
 
 ---
 
-### Task 3 (10 points)
-Assess the **model fit** using:
+## 📊 Key Deliverables
 
-- Standard error of the model
-- R²
-- *t*-test for the slope coefficient
-
----
-
-### Task 4 (5 points)
-Apply **Tukey’s Bulging Rule** and determine an appropriate **variable transformation** for this scenario.
-
----
-
-### Task 5 (10 points)
-Build a **new simple linear regression model** using the transformed variable.
-
-Include:
-- The new regression model specification
-- The estimated regression equation
-- Interpretation of the coefficient estimates
-
----
-
-### Task 6 (15 points)
-Assess the **model fit of the transformed model** using:
-
-- Standard error of the model
-- R²
-- *t*-test for the slope coefficient
-
----
-
-### Task 7 (10 points)
-Compare the **original model** and the **transformed model**.
-
-- State which model is more suitable
-- Justify your choice using statistical evidence
-
----
-
-### Task 8 (10 points)
-Interpret the **95% confidence interval for the slope** in the **transformed model**.
-
----
-
-### Task 9 (10 points)
-Test the claim:
-
-> *A 1% increase in AdSpend results in at least 5 additional conversions.*
-
-Clearly state:
-- Hypotheses
-- Test conclusion
+### 🔹 Technical Regression Analysis (HTML)
+A fully reproducible R Markdown analysis including:
+- Exploratory visualization
+- Regression modeling
+- Model comparison
+- Statistical inference
 - Business interpretation
 
----
-
-### Task 10 (10 points)
-If the client plans to spend **$15,000 next week** (`AdSpend = 15`):
-
-- Create a **95% prediction interval** for conversions
-- Create a **95% confidence interval** for the **mean conversions** at this spending level
+👉 **View the rendered HTML report:**  
+🔗 https://ritikagarg0903.github.io/regression-marketing-case-study/Regression_Assignment_RMD.html
 
 ---
 
-### Task 11 (5 points)
-Explain the difference between the two intervals created in **Task 10**.
+### 🔹 Executive Summary (PDF)
+A concise, non-technical summary written for business stakeholders, covering:
+- Business problem
+- Key findings
+- Recommendation
+- Supporting evidence
+- Limitations
 
-- Which interval is wider?
-- Why?
-- Provide **specific business scenarios** where each type of interval would be used
-
----
-
-### Task 12 (5 points)
-Based on your analysis:
-
-- Should the CFO approve the marketing budget?
-- Support your recommendation using evidence from your regression results
+👉 **Download the executive summary:**  
+📄 [`Regression_Executive_Summary.pdf`](./Regression_Executive_Summary.pdf)
 
 ---
 
-## Deliverables
+## 📝 Problem Statement
 
-### A) Technical Analysis Report  
-**Format:** R Markdown (knitted to HTML or PDF)
+The complete assignment instructions, tasks, and deliverable requirements are documented separately.
 
-**Requirements:**
-- Complete R Markdown file
-- All tasks clearly labeled
-- Code chunks visible and commented
-- All statistical output included
-- Visualizations where appropriate
-- Professional formatting
+👉 **View the full problem statement:**  
+📄 [`problem_statement.md`](./problem_statement.md)
 
 ---
 
-### B) Executive Summary  
-**Length:** Maximum 2 pages (excluding appendices)  
-**Format:** PDF only
+## 🛠️ Tools & Skills Demonstrated
 
-**Audience:** Executives with limited statistical background
-
-**Required Sections:**
-- **Business Problem** (few sentences)
-- **Key Findings** (1–2 paragraphs, include R² and significance)
-- **Recommendation** (1 paragraph)
-- **Supporting Evidence** (3–5 bullet points)
-- **Limitations** (2–3 sentences)
-
-**Guidelines:**
-- Professional business writing style
-- May include key visualizations
-- **No statistical jargon**
-- Use clear, business-focused language
+- R / RStudio  
+- Simple Linear Regression  
+- Statistical inference & diagnostics  
+- Data visualization  
+- Business analytics storytelling  
+- Executive-level reporting  
 
 ---
 
-*Course: BAX 441: Statistical Exploration and Reasoning*  
-*University of California, Davis*
+## 📈 Why This Project Matters
+
+This case study demonstrates the ability to:
+- Translate **business questions into statistical models**
+- Apply **rigorous regression analysis**
+- Communicate results effectively to **non-technical executives**
+- Support data-driven budget decisions with evidence
+
+---
+
+*Prepared by Ritika Garg*  
+*MSBA - University of California, Davis*
