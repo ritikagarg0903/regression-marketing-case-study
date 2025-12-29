@@ -1,0 +1,165 @@
+---
+title: "Regression"
+output: html_document
+date: "2025-10-05"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Data Loading & Setup
+
+```{r}
+# Load the data file
+data <- read.csv("Case2_Marketing.csv")
+
+print(head(data))
+print(paste("Sample Size (n):", nrow(data)))
+```
+
+## Task 1: Scatterplot and Linearity Check
+
+```{r}
+plot(data$AdSpend, data$Conversions,
+     main = "Conversions vs. Weekly AdSpend (Original Data)",
+     xlab = "Weekly AdSpend (thousands of $)",
+     ylab = "Number of Conversions",
+     pch = 19,
+     col = "#0072B2") # Blue color for data points
+
+linear_fit <- lm(Conversions ~ AdSpend, data = data)
+abline(linear_fit, col = "darkorange", lwd = 2)
+```
+
+**Observation:** The scatterplot shows a positive, but clearly non-linear, concave-down relationship (diminishing marginal returns), suggesting a transformation is needed.
+
+## Task 2 & 3: Linear-Linear Model
+
+```{r}
+model1 <- lm(Conversions ~ AdSpend, data = data)
+
+summary(model1)
+
+# Assess Model Fit
+rmse_model1 <- summary(model1)$sigma
+r_squared_model1 <- summary(model1)$r.squared
+
+print(paste("Model 1 R-squared:", round(r_squared_model1, 3)))
+print(paste("Model 1 Standard Error (RMSE):", round(rmse_model1, 1), "Conversions"))
+```
+
+## Task 4: Tukey's Bulging Rule and Variable Transformation
+
+The concave-down shape (diminishing returns) and the need to test a % change in X against an absolute change in Y (Conversions) suggest the Linear-Log model.
+
+```{r}
+data$Log_AdSpend <- log(data$AdSpend)
+
+# Plot the transformed data to check for linearity improvement
+plot(data$Log_AdSpend, data$Conversions,
+     main = "Conversions vs. Log(AdSpend) (Log-Level Transformation)",
+     xlab = "Log(Weekly AdSpend)",
+     ylab = "Number of Conversions",
+     pch = 19,
+     col = "#009E73") # Green color for data points
+
+# Add the new linear trend line
+log_linear_fit <- lm(Conversions ~ Log_AdSpend, data = data)
+abline(log_linear_fit, col = "darkorange", lwd = 2)
+
+correlation_log <- cor(data$Log_AdSpend, data$Conversions)
+print(paste("Pearson Correlation (Log-Level):", round(correlation_log, 3)))
+```
+
+## Task 5 & 6: Log-Level Model
+
+```{r}
+model2 <- lm(Conversions ~ Log_AdSpend, data = data)
+
+summary(model2)
+
+# Assess Model Fit
+rmse_model2 <- summary(model2)$sigma
+r_squared_model2 <- summary(model2)$r.squared
+
+print(paste("Model 2 R-squared:", round(r_squared_model2, 3)))
+print(paste("Model 2 Standard Error (RMSE):", round(rmse_model2, 1), "Conversions"))
+```
+
+## Task 7: Compare the Two Models
+
+```{r}
+print(paste("Model 1 (Linear) R-squared:", round(r_squared_model1, 3), "| RMSE:", round(rmse_model1, 1)))
+print(paste("Model 2 (Log-Level) R-squared:", round(r_squared_model2, 3), "| RMSE:", round(rmse_model2, 1)))
+```
+**Interpretation:** Model 2 is suitable due to higher R-squared, lower RMSE, and appropriate functional form for interpreting percentage changes in AdSpend.
+
+## Task 8: Interpret 95% Confidence Interval for the Slope (Model 2)
+
+```{r}
+conf_interval_slope <- confint(model2, level = 0.95)
+print(conf_interval_slope)
+```
+
+## Task 9: Test the CFO's Claim (Beta1 >= 500)
+
+```{r}
+# Claim: 1% increase in AdSpend -> AT LEAST 5 additional conversions.
+# In Log-Level model: (Beta1 / 100) >= 5  =>  Beta1 >= 500
+# H0: Beta1 <= 500 (Budget NOT justified)
+# H1: Beta1 > 500 (Budget IS justified) - Right-tailed test.
+
+# 1. Extract values from Model 2
+beta1_hat <- coef(model2)["Log_AdSpend"]
+se_beta1_hat <- summary(model2)$coefficients["Log_AdSpend", "Std. Error"]
+hypothesized_beta1 <- 500
+
+# 2. Calculate t-test statistic
+t_test_stat <- (beta1_hat - hypothesized_beta1) / se_beta1_hat
+print(paste("Calculated t-statistic (Test vs. Beta=500):", round(t_test_stat, 3)))
+
+# 3. Determine critical t-value (alpha=0.05, right-tailed)
+n <- nrow(data)
+df <- n - 2
+# Use lower.tail=FALSE for a right-tailed test critical value at alpha=0.05
+t_critical <- qt(0.05, df, lower.tail = FALSE)
+print(paste("Critical t-value (alpha=0.05, df=258):", round(t_critical, 3)))
+
+
+print(t_test_stat, t_critical)
+```
+## Task 10: Prediction Interval (PI) and Confidence Interval (CI)
+
+```{r}
+# Set the new AdSpend value
+new_spend <- 15
+new_data <- data.frame(AdSpend = new_spend)
+# Must transform the independent variable for the prediction
+new_data$Log_AdSpend <- log(new_spend)
+
+# Predict the Conversion: Point estimate
+point_estimate <- predict(model2, new_data)
+print(paste("Point Forecast (AdSpend = $15k):", round(point_estimate, 0), "Conversions"))
+
+# 1. 95% Prediction Interval (PI) - for a single future observation
+prediction_interval <- predict(model2, new_data, interval = "prediction", level = 0.95)
+print("95% Prediction Interval for next week's conversions:")
+print(round(prediction_interval, 0))
+# PI: 
+
+# 2. 95% Confidence Interval (CI) - for the mean response at that level
+confidence_interval <- predict(model2, new_data, interval = "confidence", level = 0.95)
+print("95% Confidence Interval for mean conversions:")
+print(round(confidence_interval, 0))
+```
+## Task 11: Explain the Difference and Width
+
+```{r}
+pi_width <- prediction_interval[1, "upr"] - prediction_interval[1, "lwr"]
+ci_width <- confidence_interval[1, "upr"] - confidence_interval[1, "lwr"]
+print(paste("Prediction Interval Width:", round(pi_width, 1)))
+print(paste("Confidence Interval Width:", round(ci_width, 1)))
+```
+**Interpretation:** The Prediction Interval is wider because it accounts for both the sampling error (uncertainty in the line position) AND the residual error (inherent random variability of a single observation around the line).
+
