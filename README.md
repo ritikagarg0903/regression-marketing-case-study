@@ -1,4 +1,8 @@
-# Regression Marketing Case Study  
+# Regression Marketing Case Study
+![R](https://img.shields.io/badge/R-Regression-blue)
+![GitHub Pages](https://img.shields.io/badge/GitHub-Pages-success)
+![Status](https://img.shields.io/badge/Project-Complete-brightgreen)
+
 **Digital Marketing Performance Analysis**
 
 This repository contains a complete regression-based case study analyzing the relationship between **weekly digital advertising spend** and **website conversions** for an e-commerce retailer.
