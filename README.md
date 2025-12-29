@@ -24,17 +24,6 @@ The project was completed as part of the **BAX-441 (Business Analytics)** course
 
 ---
 
-## 📂 Repository Structure
-
-├── Case2_Marketing.csv # Dataset (260 weeks of data)
-├── problem_statement.md # Full assignment problem statement
-├── Regression_Assignment.Rmd # R Markdown analysis
-├── Regression_Assignment_RMD.html # Rendered HTML output
-├── Regression_Executive_Summary.pdf # Executive business summary
-├── README.md # Project overview (this file)
-
----
-
 ## 📊 Key Deliverables
 
 ### 🔹 Technical Regression Analysis (HTML)
